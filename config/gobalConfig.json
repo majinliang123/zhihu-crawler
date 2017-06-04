@@ -1,0 +1,9 @@
+{
+    "MongoDBUrl": "localhost",
+    "MongoDBPort": 27017,
+    "MongoDBName": "zhihu",
+    "collection": {
+        "User": "user"
+    },
+    "logPath": "../logs/logs.log"
+}

@@ -1,4 +1,4 @@
-# zhihu-crawler
+# zhihu-crawler ![Build Status](https://travis-ci.org/majinliang123/zhihu-crawler.svg?branch=develop)
 
 ### a crawler for zhihu, which search data
 

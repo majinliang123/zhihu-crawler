@@ -5,5 +5,6 @@
     "collection": {
         "User": "user"
     },
-    "logPath": "../logs/logs.log"
+    "logPath": "../logs/logs.log",
+    "origin": "https://www.zhihu.com"
 }

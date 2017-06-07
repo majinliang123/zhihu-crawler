@@ -11,19 +11,53 @@ const logger = config.logger;
 const userCollectoin = nconf.get('collection:User');
 
 const userSchema = mongoDB.Schema({
-    username: String,
-    age: Number
+    token: String,
+    name: String,
+    followers: Array,
+    following: Array,
+    answers: Array,
+    asks: Array,
+    following_topics: Array,
+    following_columns: Array,
+    following_questions: Array,
+    done: Boolean
 });
-userSchema.methods.speak = function() {
-    let greet = 'User name is ' + this.username + '. Age is ' + this.age;
-    logger.info(greet);
-};
 
 const User = mongoDB.model(userCollectoin, userSchema);
 
-new User({ username: 'fluffy', age: 10 }).save(function(err, user) {
-    if (err) {
+function insert(obj) {
+    new User(obj).save(function(err, user) {
+        if (err) {
+            return logger.error(err);
+        }
+    });
+}
+
+function insertMany(arr) {
+    User.insertMany(arr, function(err) {
         return logger.error(err);
-    }
-    user.speak();
-});
+    });
+}
+
+function findOne(query, callback) {
+    User.findOne(query, function(err, docs) {
+        if (err) {
+            return logger.error(err);
+        }
+        callback(docs);
+    });
+}
+
+function update(query, obj) {
+    User.update(query, obj, function(err) {
+        return logger.error(err);
+    });
+}
+
+module.exports = {
+    'insert': insert,
+    'insertMany': insertMany,
+    'findOne': findOne,
+    'update': update
+}
+insert({ name: '18829236722', token: '18829236722' })

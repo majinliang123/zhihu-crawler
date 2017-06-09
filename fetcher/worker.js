@@ -7,14 +7,14 @@
 const fetchInfo = require('./info.js');
 const analyzer = require('./analyzer.js');
 
-const starter = '18829236722';
+const starter = 'song-yuan-fan';
 
 async function worker(starter) {
     let offset = 0;
     while (true) {
         let data = await fetchInfo(starter, offset);
         console.log(data);
-        if (analyzer(data, starter)) {
+        if (analyzer.analyzeFollowees(data, starter)) {
             break;
         };
         offset += 20;

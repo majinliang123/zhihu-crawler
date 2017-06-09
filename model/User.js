@@ -28,21 +28,23 @@ const User = mongoDB.model(userCollectoin, userSchema);
 function insert(obj) {
     new User(obj).save(function(err, user) {
         if (err) {
-            return logger.error(err);
+            return logger.error('error in insert ' + err);
         }
     });
 }
 
 function insertMany(arr) {
     User.insertMany(arr, function(err) {
-        return logger.error(err);
+        if (err) {
+            return logger.error('error in insertMany ' + err);
+        }
     });
 }
 
 function findOne(query, callback) {
     User.findOne(query, function(err, docs) {
         if (err) {
-            return logger.error(err);
+            return logger.error('error in findOne ' + err);
         }
         callback(docs);
     });
@@ -50,7 +52,17 @@ function findOne(query, callback) {
 
 function update(query, obj) {
     User.update(query, obj, function(err) {
-        return logger.error(err);
+        if (err) {
+            return logger.error('error in update ' + err);
+        }
+    });
+}
+
+function pushToArray(query, obj) {
+    User.update(query, { $pushAll: obj }, { "upsert": true }, function(err) {
+        if (err) {
+            return logger.error('error in update ' + err);
+        }
     });
 }
 
@@ -58,6 +70,7 @@ module.exports = {
     'insert': insert,
     'insertMany': insertMany,
     'findOne': findOne,
-    'update': update
-}
-insert({ name: '18829236722', token: '18829236722' })
+    'update': update,
+    'pushToArray': pushToArray
+};
+// insert({ name: '18829236722', token: '18829236722' });

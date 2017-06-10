@@ -9,12 +9,12 @@ const request = require("request");
 
 
 const config = require('../config/gobalConfig.js');
-const Creator = require('./util.js');
 
 
-function fetchInfo(url_token, offset) {
+
+function fetchInfo(url_token, offset, func) {
     return new Promise(function(resolve, reject) {
-        request(Creator.createUrlFollowees(url_token, offset), function(err, response) {
+        request(func(url_token, offset), function(err, response) {
             if (err) {
                 reject(err);
             } else {

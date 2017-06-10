@@ -121,28 +121,6 @@ function analyzeFollowingTopics(info, self) {
     return is_end;
 }
 
-// 提出的问题
-// function analyzeFollowingTopics(info, self) {
-//     info = JSON.parse(info);
-//     let is_end = info.paging.is_end;
-
-//     let data = info.data;
-//     let arr = [];
-
-//     data.forEach(function(element) {
-//         let id = element.topic.id;
-//         let name = element.topic.name;
-//         let question = {
-//             'id': id,
-//             'name': name
-//         };
-//         arr.push(question);
-//     });
-
-//     User.pushToArray({ token: self }, { following_topics: arr });
-//     return is_end;
-// }
-
 function analyzeAnswers(info, self) {
     info = JSON.parse(info);
     let is_end = info.paging.is_end;

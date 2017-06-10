@@ -16,7 +16,6 @@ const userSchema = mongoDB.Schema({
     followers: Array,
     following: Array,
     answers: Array,
-    asks: Array,
     following_topics: Array,
     following_columns: Array,
     following_questions: Array,

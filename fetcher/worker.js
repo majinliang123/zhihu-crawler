@@ -5,20 +5,85 @@
 'use strict';
 
 const fetchInfo = require('./info.js');
-const analyzer = require('./analyzer.js');
+const Analyzer = require('./analyzer.js');
+const Creator = require('./util.js');
 
-const starter = 'song-yuan-fan';
+// const queue = ['following_questions', 'following_columns', 'following_topics', 'asks', 'answers', 'following', 'followers'];
 
-async function worker(starter) {
+async function workeForFollowees(starter) {
     let offset = 0;
     while (true) {
-        let data = await fetchInfo(starter, offset);
-        console.log(data);
-        if (analyzer.analyzeFollowees(data, starter)) {
+        let data = await fetchInfo(starter, offset, Creator.createUrlFollowees);
+        if (Analyzer.analyzeFollowees(data, starter)) {
             break;
         };
         offset += 20;
     }
 }
 
-worker(starter);
+async function workeForFollowers(starter) {
+    let offset = 0;
+    while (true) {
+        let data = await fetchInfo(starter, offset, Creator.createUrlFollowers);
+        if (Analyzer.analyzeFollowers(data, starter)) {
+            break;
+        };
+        offset += 20;
+    }
+}
+
+async function workeForFollowingQuestions(starter) {
+    let offset = 0;
+    while (true) {
+        let data = await fetchInfo(starter, offset, Creator.createUrlFollowingQuestions);
+        if (Analyzer.analyzeFollowingQuestions(data, starter)) {
+            break;
+        };
+        offset += 20;
+    }
+}
+
+async function workeForFollowingColumns(starter) {
+    let offset = 0;
+    while (true) {
+        let data = await fetchInfo(starter, offset, Creator.createUrlFollowingColumns);
+        if (Analyzer.analyzeFollowingColumns(data, starter)) {
+            break;
+        };
+        offset += 20;
+    }
+}
+
+async function workeForFollowingTopics(starter) {
+    let offset = 0;
+    while (true) {
+        let data = await fetchInfo(starter, offset, Creator.createUrlFollowingTopics);
+        if (Analyzer.analyzeFollowingTopics(data, starter)) {
+            break;
+        };
+        offset += 20;
+    }
+}
+
+async function workeForAnswers(starter) {
+    let offset = 0;
+    while (true) {
+        let data = await fetchInfo(starter, offset, Creator.createUrlAnswers);
+        if (Analyzer.analyzeAnswers(data, starter)) {
+            break;
+        };
+        offset += 20;
+    }
+}
+
+function worker(starter) {
+    workeForFollowees(starter);
+    workeForFollowers(starter);
+    workeForFollowingQuestions(starter);
+    workeForFollowingColumns(starter);
+    workeForFollowingTopics(starter);
+    workeForAnswers(starter);
+    console.log('crawler for ' + starter + ' is completed.');
+}
+
+worker('culiulongxia');

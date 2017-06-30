@@ -76,14 +76,15 @@ async function workeForAnswers(starter) {
     }
 }
 
-function worker(starter) {
-    workeForFollowees(starter);
-    workeForFollowers(starter);
-    workeForFollowingQuestions(starter);
-    workeForFollowingColumns(starter);
-    workeForFollowingTopics(starter);
-    workeForAnswers(starter);
-    console.log('crawler for ' + starter + ' is completed.');
+function worker(starter, callback) {
+    let workerList = [workeForFollowees(starter), workeForFollowers(starter),  workeForFollowingQuestions(starter), workeForFollowingColumns(starter),workeForFollowingTopics(starter),workeForAnswers(starter)];
+    Promise.all(workerList).then(function(){
+        callback();
+        console.log('crawler for ' + starter + ' is completed.');
+    }).catch(function(err){
+        console.log(err);
+    });
+    
 }
 
-worker('culiulongxia');
+module.exports = worker;

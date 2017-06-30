@@ -2,7 +2,7 @@
     /**
      * 使用es的version是es6
      */
-    "esversion": 6,
+    "esversion": 7,
     "node": true,
     /**
      * 是否阻止位运算符的使用

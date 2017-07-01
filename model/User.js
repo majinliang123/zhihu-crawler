@@ -41,11 +41,14 @@ function insertMany(arr) {
 }
 
 function findOne(query, callback) {
-    User.findOne(query, function(err, docs) {
-        if (err) {
-            return logger.error('error in findOne ' + err);
-        }
-        callback(docs);
+    User.count({ 'done': null }, function(err, total) {
+        let rand = Math.round(Math.random() * total);
+        User.findOne(query, null, { skip: rand, limit: 1 }, function(err, docs) {
+            if (err) {
+                return logger.error('error in findOne ' + err);
+            }
+            callback(docs);
+        });
     });
 }
 
@@ -72,4 +75,8 @@ module.exports = {
     'update': update,
     'pushToArray': pushToArray
 };
+
 // insert({ name: '18829236722', token: '18829236722' });
+// findOne({ 'done': null }, function(docs) {
+//     console.log(docs);
+// });

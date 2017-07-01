@@ -1,0 +1,35 @@
+{
+    "name": "zhihu-crawler",
+    "version": "1.0.0",
+    "description": "a crawler for zhihu data",
+    "main": "index.js",
+    "scripts": {
+        "test": "gulp"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+ssh://git@github.com/majinliang123/zhihu-crawler.git"
+    },
+    "keywords": [
+        "zhihu",
+        "crawler"
+    ],
+    "author": "Madison",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/majinliang123/zhihu-crawler/issues"
+    },
+    "homepage": "https://github.com/majinliang123/zhihu-crawler#readme",
+    "dependencies": {
+        "log4js": "^1.1.1",
+        "mongoose": "^4.10.4",
+        "nconf": "^0.8.4"
+    },
+    "devDependencies": {
+        "gulp": "^3.9.1",
+        "gulp-jshint": "^2.0.4",
+        "jshint": "^2.9.4",
+        "jshint-stylish": "^2.2.1",
+        "mkdirp": "^0.5.1"
+    }
+}

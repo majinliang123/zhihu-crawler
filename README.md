@@ -25,6 +25,12 @@ communicate with mongoDB by mongoose(in folder 'model')
 
 * If you run the program up to 20 mins, the zhihu website may lock your account. Be careful.
 
+# Bugs
+
+* Before you run it, you need insert many user information into db
+
+* Many proccess will read the same user from db sometimes, so i will make a random read from db
+
 # Welcome
 
 welcome your star

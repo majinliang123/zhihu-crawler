@@ -1,10 +1,5 @@
-/**
- * use to analyse json data
- * create by Madison on 2017/6/7
- */
 'use strict';
 
-const User = require('../model/User.js');
 
 function analyzeFollowees(info, self) {
     info = JSON.parse(info);
@@ -13,7 +8,7 @@ function analyzeFollowees(info, self) {
     let data = info.data;
     let arr = [];
 
-    data.forEach(function(element) {
+    data.forEach(function (element) {
         let token = element.url_token;
         let name = element.name;
         let query = {
@@ -21,7 +16,7 @@ function analyzeFollowees(info, self) {
             'name': name
         };
         arr.push(query);
-        User.findOne(query, function(docs) {
+        User.findOne(query, function (docs) {
             if (!docs) {
                 User.insert(query);
             }
@@ -39,7 +34,7 @@ function analyzeFollowers(info, self) {
     let data = info.data;
     let arr = [];
 
-    data.forEach(function(element) {
+    data.forEach(function (element) {
         let token = element.url_token;
         let name = element.name;
         let query = {
@@ -47,7 +42,7 @@ function analyzeFollowers(info, self) {
             'name': name
         };
         arr.push(query);
-        User.findOne(query, function(docs) {
+        User.findOne(query, function (docs) {
             if (!docs) {
                 User.insert(query);
             }
@@ -65,7 +60,7 @@ function analyzeFollowingQuestions(info, self) {
     let data = info.data;
     let arr = [];
 
-    data.forEach(function(element) {
+    data.forEach(function (element) {
         let id = element.id;
         let title = element.title;
         let question = {
@@ -86,7 +81,7 @@ function analyzeFollowingColumns(info, self) {
     let data = info.data;
     let arr = [];
 
-    data.forEach(function(element) {
+    data.forEach(function (element) {
         let id = element.id;
         let title = element.title;
         let question = {
@@ -107,7 +102,7 @@ function analyzeFollowingTopics(info, self) {
     let data = info.data;
     let arr = [];
 
-    data.forEach(function(element) {
+    data.forEach(function (element) {
         let id = element.topic.id;
         let name = element.topic.name;
         let question = {
@@ -128,7 +123,7 @@ function analyzeAnswers(info, self) {
     let data = info.data;
     let arr = [];
 
-    data.forEach(function(element) {
+    data.forEach(function (element) {
         let title = element.question.title;
         let id = element.question.id;
         let query = {
@@ -136,7 +131,7 @@ function analyzeAnswers(info, self) {
             'id': id
         };
         arr.push(query);
-        User.findOne(query, function(docs) {
+        User.findOne(query, function (docs) {
             if (!docs) {
                 User.insert(query);
             }

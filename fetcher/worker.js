@@ -6,14 +6,14 @@
 
 const fetchInfo = require('./info.js');
 const Analyzer = require('./analyzer.js');
-const Creator = require('./util.js');
+const UrlCreater = require('../util/urlCreater.js');
 
 // const queue = ['following_questions', 'following_columns', 'following_topics', 'asks', 'answers', 'following', 'followers'];
 
-async function workeForFollowees(starter) {
+async function workForFollowees(starter) {
     let offset = 0;
     while (true) {
-        let data = await fetchInfo(starter, offset, Creator.createUrlFollowees);
+        let data = await fetchInfo(starter, offset, UrlCreater.createUrlFollowees);
         if (Analyzer.analyzeFollowees(data, starter)) {
             break;
         };
@@ -21,7 +21,7 @@ async function workeForFollowees(starter) {
     }
 }
 
-async function workeForFollowers(starter) {
+async function workForFollowers(starter) {
     let offset = 0;
     while (true) {
         let data = await fetchInfo(starter, offset, Creator.createUrlFollowers);
@@ -32,7 +32,7 @@ async function workeForFollowers(starter) {
     }
 }
 
-async function workeForFollowingQuestions(starter) {
+async function workForFollowingQuestions(starter) {
     let offset = 0;
     while (true) {
         let data = await fetchInfo(starter, offset, Creator.createUrlFollowingQuestions);
@@ -43,7 +43,7 @@ async function workeForFollowingQuestions(starter) {
     }
 }
 
-async function workeForFollowingColumns(starter) {
+async function workForFollowingColumns(starter) {
     let offset = 0;
     while (true) {
         let data = await fetchInfo(starter, offset, Creator.createUrlFollowingColumns);
@@ -54,7 +54,7 @@ async function workeForFollowingColumns(starter) {
     }
 }
 
-async function workeForFollowingTopics(starter) {
+async function workForFollowingTopics(starter) {
     let offset = 0;
     while (true) {
         let data = await fetchInfo(starter, offset, Creator.createUrlFollowingTopics);
@@ -65,7 +65,7 @@ async function workeForFollowingTopics(starter) {
     }
 }
 
-async function workeForAnswers(starter) {
+async function workForAnswers(starter) {
     let offset = 0;
     while (true) {
         let data = await fetchInfo(starter, offset, Creator.createUrlAnswers);
@@ -76,15 +76,18 @@ async function workeForAnswers(starter) {
     }
 }
 
-function worker(starter, callback) {
-    let workerList = [workeForFollowees(starter), workeForFollowers(starter),  workeForFollowingQuestions(starter), workeForFollowingColumns(starter),workeForFollowingTopics(starter),workeForAnswers(starter)];
-    Promise.all(workerList).then(function(){
-        callback();
-        console.log('crawler for ' + starter + ' is completed.');
-    }).catch(function(err){
-        console.log(err);
+function worker(starter) {
+    return new Promise(function (resolve, reject) {
+        let workerList = [workForFollowees(starter), workForFollowers(starter), workForFollowingQuestions(starter), workForFollowingColumns(starter), workForFollowingTopics(starter), workForAnswers(starter)];
+        Promise.all(workerList)
+            .then(function () {
+                resolve(starter);
+            })
+            .catch(function () {
+                reject('crawler for ' + starter + ' is failed.');
+            });
     });
-    
 }
+
 
 module.exports = worker;

@@ -1,7 +1,7 @@
 {
     "cluster": {
         "number": 1,
-        "interval": 10
+        "interval": 100
     },
     "db": {
         "MongoDBUrl": "localhost",
@@ -18,14 +18,16 @@
     "origin": "https://www.zhihu.com",
     "headerUrl": "https://www.zhihu.com/api/v4/members/",
     "header": {
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+        "accept": "application/json, text/plain, */*",
         "Accept-charset": "utf8",
-        "Accept-Language": "zh-CN,zh;q=0.8,en-US;q=0.6,en;q=0.4",
-        "Cookie": "q_c1=a1f88b4836f54264aecef328b1b5aa45|1497753595000|1497753595000; _xsrf=a4127a1aec2628f05f77235158cb4b19; d_c0='AEAChUjK7guPTgrnmhKaqbHWvPsfOLm4Kpg=|1497783498'; _zap=5e589146-0444-42c0-a47e-ecc5b351ff51; aliyungf_tc=AQAAABLPcjBqjA4AQDUjOvzVUlySr0b5; l_n_c=1; l_cap_id='MmVlYWJiZWQyNTQ1NGRlZjgwNDViMWQ1MGJlZTU3MTI=|1498831622|28bf45e03e6fc65e49ca9258b398991471349542'; cap_id='MjkwNDMwMmVlMWI2NDI4YzhkYzY4NjIzNTk1OTYwNjQ=|1498831622|3d72e522dc4bbb3893149584408e2fddc3c9d2a5'; capsion_ticket='2|1:0|10:1498831644|14:capsion_ticket|44:NmEwMjJlOGI0ODdkNGRjMGJiYTgyYTA1NWI1N2FhNjQ=|146b5f9dce22f7d9b71c84473ef9e33b2816cfb20995a479e1de5e0e18382e0a'; __utma=51854390.973626249.1497783502.1498825785.1498831648.6; __utmb=51854390.0.10.1498831648; __utmc=51854390; __utmz=51854390.1498831648.6.3.utmcsr=zhihu.com|utmccn=(referral)|utmcmd=referral|utmcct=/people/hua-tai-xiang-94/activities; __utmv=51854390.000--|2=registration_date=20160603=1^3=entry_date=20170618=1; auth_type=cXFjb25u|1498831665|5d4f138ab5b816603c1ccd9a833f46a6ae24fcf4; atoken=AC0580BDBFB9FA8E8A1FD70AB4F6CBB9; atoken_expired_in=7776000; token='QUMwNTgwQkRCRkI5RkE4RThBMUZENzBBQjRGNkNCQjk=|1498831665|6f288f2c19557b6dd3c6d4cc1a8018cb8abdca7f'; client_id='RERGRDg0MTk1MDYzOUVEOEUyMDA1RjY0MEYwMDJCNEE=|1498831665|c4f31e851d477f072b7da3a84a134907ba690311'; z_c0=Mi4wQUlEQzI4bG9fZ3NBUUFLRlNNcnVDeGNBQUFCaEFsVk5RdWg5V1FCUWw4WTN3Z3VhMmxnYjZJMVcwb0I0QjRYTHNB|1498831682|c58213702aed9a804220b7eb538aa5e546a7047e; unlock_ticket='QUlEQzI4bG9fZ3NYQUFBQVlRSlZUVXBpVmxsT0pXUHN0X0Y1T2hWaVltanEtZjBLeDR0UFlBPT0=|1498831682|01cdf94cfa5fcb3e1fb09affd36bb200a2f578ca'; _xsrf=a4127a1aec2628f05f77235158cb4b19",
+        "Accept-Language": "zh-CN,zh;q=0.9",
+        "authorization": "Bearer 2|1:0|10:1512312603|4:z_c0|92:Mi4xZkxrYUF3QUFBQUFBa0lKQmdmSnNEQ2NBQUFDRUFsVk5HNXhMV2dBbHF1eEFBc0FGMFFjNmNaRUQyaU9iUEFha0dn|b6f4c30b9c0f11cde56fc389ed5e4d38204242f9a8f1753f8e1c112a4c290c12",
         "Connection": "keep-alive",
-        "Referer": "https://www.zhihu.com/",
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36",
-        "X-Requested-With": "XMLHttpRequest",
-        "X-Xsrftoken": "6593c414de85eb185094752125fd40de"
+        "Host": "www.zhihu.com",
+        "Referer": "https://www.zhihu.com/people/xiao-ma-86-12-82/activities",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36",
+        "X-API-VERSION": "3.0.40",
+        "X-UDID": "AJCCQYHybAyPTuiDRTmOjFYV3xCH-AuOGtI=",
+        "Cookie": "_zap=f4fc8fd1-a2b4-4e36-a85f-47e9a1314ee9; d_c0='AJCCQYHybAyPTuiDRTmOjFYV3xCH-AuOGtI=|1506249758'; q_c1=f10074715a494de2ba83810a2e220374|1507350973000|1504405635000; q_c1=f10074715a494de2ba83810a2e220374|1512312564000|1504405635000; r_cap_id='Y2IyMzZhNzgyODJhNDBhMmFkMzExMjI5M2FkYmYxYWU=|1512312564|9d1424216ca5478b8b8f1f3504362fec9968cc18'; cap_id='OGVjNDQ0Njk4ZjA3NDU2Mjk5YWM5ODdhOGU4MTVmYzg=|1512312564|5568063aee8d01844d994d2e8c9fe06a9e60ddcc'; l_cap_id='ZDE3ZWIxZWE2Y2U0NDMxYjlmYjI4M2YwZTRmMDQ0YTg=|1512312564|df2033c9424a6f7ef00ad35ede294245e810cc43'; __utma=51854390.1337933262.1507378103.1509452020.1512312567.3; __utmz=51854390.1507378103.1.1.utmcsr=zhihu.com|utmccn=(referral)|utmcmd=referral|utmcct=/question/20346114; __utmv=51854390.000--|2=registration_date=20160603=1^3=entry_date=20170903=1; z_c0='2|1:0|10:1512312603|4:z_c0|92:Mi4xZkxrYUF3QUFBQUFBa0lKQmdmSnNEQ2NBQUFDRUFsVk5HNXhMV2dBbHF1eEFBc0FGMFFjNmNaRUQyaU9iUEFha0dn|b6f4c30b9c0f11cde56fc389ed5e4d38204242f9a8f1753f8e1c112a4c290c12'; aliyungf_tc=AQAAADuRMCeaIwIA4Yhdcii2PkXRFTTD; _xsrf=8b9d90c7-1a88-4dd4-a450-e4d7457c6864"
     }
 }

@@ -2,7 +2,7 @@
 
 const MongoClient = require('mongodb').MongoClient
 const nconf = require('nconf');
-const logger = require('log4js').getLogger('cheese');
+const logger = require('log4js').getLogger('zhihu-crawler');
 
 const MongoDBUrl = nconf.get('db:MongoDBUrl');
 const MongoDBPort = nconf.get('db:MongoDBPort');

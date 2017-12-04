@@ -14,7 +14,7 @@ const logPath = __dirname + nconf.get('log:logPath');
 const level = nconf.get('log:level');
 log4js.loadAppender('file');
 log4js.addAppender(log4js.appenders.file(logPath), 'cheese');
-const logger = log4js.getLogger('cheese');
+const logger = log4js.getLogger('zhihu-crawler');
 logger.setLevel(level);
 
 const clusterNumber = nconf.get('cluster:number') || numCPUs;

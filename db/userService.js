@@ -1,7 +1,7 @@
 'use strict';
 
 const nconf = require('nconf');
-const logger = require('log4js').getLogger('cheese');
+const logger = require('log4js').getLogger('zhihu-crawler');
 
 const UserCollection = nconf.get('db:collection:user');
 
@@ -33,7 +33,22 @@ let updatePromise = function (database, query, doc) {
     });
 };
 
+let insertPromise = function (database, doc) {
+    logger.info('Handling by insertPromise with doc: ' + JSON.stringify(doc));
+    return new Promise(function (resolve, reject) {
+        database.collection(UserCollection).insert(doc, function (err, result) {
+            if (err) {
+                reject(err);
+            } else {
+                logger.info('insertPromise successfully with result: ' + JSON.stringify(result));
+                resolve(result);
+            }
+        });
+    });
+}
+
 module.exports = {
     findOne: findOnePromise,
-    update: updatePromise
+    update: updatePromise,
+    insert: insertPromise
 };

@@ -1,64 +1,128 @@
 'use strict';
 
+const UserService = require('../db/userService');
 
-function analyzeFollowees(info, self) {
+function analyzeFollowees(database, info, user) {
     info = JSON.parse(info);
     let is_end = info.paging.is_end;
 
     let data = info.data;
-    let arr = [];
+    let insertUserPromises = [];
+    let followingArray = [];
 
     data.forEach(function (element) {
         let token = element.url_token;
         let name = element.name;
-        let query = {
+        let insertDoc = {
             'token': token,
             'name': name
         };
-        arr.push(query);
-        User.findOne(query, function (docs) {
-            if (!docs) {
-                User.insert(query);
-            }
+        followingArray.push(insertDoc);
+        let insertPromise = new Promise(function (resolve, reject) {
+            UserService.findOne(database, insertDoc)
+                .then(function (user) {
+                    if (user) {
+                        resolve();
+                    } else {
+                        UserService.insert(database, insertDoc)
+                            .then(function (result) {
+                                resolve(result);
+                            })
+                            .catch(function (err) {
+                                reject(err);
+                            });
+                    }
+                })
+                .catch(function (err) {
+                    reject(err);
+                });
         });
+        insertUserPromises.push(insertPromise);
     });
-
-    User.pushToArray({ token: self }, { following: arr });
-    return is_end;
+    let updatePromise = new Promise(function (resolve, reject) {
+        UserService.findOne(database, { 'token': user })
+            .then(function (userDoc) {
+                userDoc.following = followingArray;
+                UserService.update(database, { 'token': user }, userDoc)
+                    .then(function () {
+                        resolve(is_end);
+                    })
+                    .catch(function (err) {
+                        reject(err);
+                    })
+            })
+            .catch(function (err) {
+                reject(err);
+            })
+    });
+    return Promise.all(insertUserPromises)
+        .then(updatePromise);
 }
 
-function analyzeFollowers(info, self) {
+function analyzeFollowers(database, info, user) {
     info = JSON.parse(info);
     let is_end = info.paging.is_end;
 
     let data = info.data;
-    let arr = [];
+    let insertUserPromises = [];
+    let followersArray = [];
 
     data.forEach(function (element) {
         let token = element.url_token;
         let name = element.name;
-        let query = {
+        let insertDoc = {
             'token': token,
             'name': name
         };
-        arr.push(query);
-        User.findOne(query, function (docs) {
-            if (!docs) {
-                User.insert(query);
-            }
+        followersArray.push(insertDoc);
+        let insertPromise = new Promise(function (resolve, reject) {
+            UserService.findOne(database, insertDoc)
+                .then(function (user) {
+                    if (user) {
+                        resolve();
+                    } else {
+                        UserService.insert(database, insertDoc)
+                            .then(function (result) {
+                                resolve(result);
+                            })
+                            .catch(function (err) {
+                                reject(err);
+                            });
+                    }
+                })
+                .catch(function (err) {
+                    reject(err);
+                });
         });
+        insertUserPromises.push(insertPromise);
     });
-
-    User.pushToArray({ token: self }, { followers: arr });
-    return is_end;
+    let updatePromise = new Promise(function (resolve, reject) {
+        UserService.findOne(database, { 'token': user })
+            .then(function (userDoc) {
+                userDoc.followers = followersArray;
+                UserService.update(database, { 'token': user }, userDoc)
+                    .then(function () {
+                        resolve(is_end);
+                    })
+                    .catch(function (err) {
+                        reject(err);
+                    })
+            })
+            .catch(function (err) {
+                reject(err);
+            })
+    });
+    return Promise.all(insertUserPromises)
+        .then(updatePromise);
 }
 
-function analyzeFollowingQuestions(info, self) {
+
+function analyzeFollowingQuestions(database, info, user) {
     info = JSON.parse(info);
     let is_end = info.paging.is_end;
 
     let data = info.data;
-    let arr = [];
+    let followingQuestionsArray = [];
 
     data.forEach(function (element) {
         let id = element.id;
@@ -67,80 +131,132 @@ function analyzeFollowingQuestions(info, self) {
             'id': id,
             'title': title
         };
-        arr.push(question);
+        followingQuestionsArray.push(question);
     });
-
-    User.pushToArray({ token: self }, { following_questions: arr });
-    return is_end;
+    let updatePromise = new Promise(function (resolve, reject) {
+        UserService.findOne(database, { 'token': user })
+            .then(function (userDoc) {
+                userDoc.following_questions = followingQuestionsArray;
+                UserService.update(database, { 'token': user }, userDoc)
+                    .then(function () {
+                        resolve(is_end);
+                    })
+                    .catch(function (err) {
+                        reject(err);
+                    })
+            })
+            .catch(function (err) {
+                reject(err);
+            })
+    });
+    return updatePromise;
 }
 
-function analyzeFollowingColumns(info, self) {
+function analyzeFollowingColumns(database, info, user) {
     info = JSON.parse(info);
     let is_end = info.paging.is_end;
 
     let data = info.data;
-    let arr = [];
+    let followingColumnsArray = [];
 
     data.forEach(function (element) {
         let id = element.id;
         let title = element.title;
-        let question = {
+        let column = {
             'id': id,
             'title': title
         };
-        arr.push(question);
+        followingColumnsArray.push(column);
     });
-
-    User.pushToArray({ token: self }, { following_columns: arr });
-    return is_end;
+    let updatePromise = new Promise(function (resolve, reject) {
+        UserService.findOne(database, { 'token': user })
+            .then(function (userDoc) {
+                userDoc.following_columns = followingColumnsArray;
+                UserService.update(database, { 'token': user }, userDoc)
+                    .then(function () {
+                        resolve(is_end);
+                    })
+                    .catch(function (err) {
+                        reject(err);
+                    })
+            })
+            .catch(function (err) {
+                reject(err);
+            })
+    });
+    return updatePromise;
 }
 
-function analyzeFollowingTopics(info, self) {
+function analyzeFollowingTopics(database, info, user) {
     info = JSON.parse(info);
     let is_end = info.paging.is_end;
 
     let data = info.data;
-    let arr = [];
+    let followingTopicsArray = [];
 
     data.forEach(function (element) {
-        let id = element.topic.id;
-        let name = element.topic.name;
-        let question = {
+        let id = element.id;
+        let title = element.title;
+        let topic = {
             'id': id,
-            'name': name
+            'title': title
         };
-        arr.push(question);
+        followingTopicsArray.push(column);
     });
-
-    User.pushToArray({ token: self }, { following_topics: arr });
-    return is_end;
+    let updatePromise = new Promise(function (resolve, reject) {
+        UserService.findOne(database, { 'token': user })
+            .then(function (userDoc) {
+                userDoc.following_topics = followingTopicsArray;
+                UserService.update(database, { 'token': user }, userDoc)
+                    .then(function () {
+                        resolve(is_end);
+                    })
+                    .catch(function (err) {
+                        reject(err);
+                    })
+            })
+            .catch(function (err) {
+                reject(err);
+            })
+    });
+    return updatePromise;
 }
 
-function analyzeAnswers(info, self) {
+function analyzeAnswers(database, info, user) {
     info = JSON.parse(info);
     let is_end = info.paging.is_end;
 
     let data = info.data;
-    let arr = [];
+    let answersArray = [];
 
     data.forEach(function (element) {
-        let title = element.question.title;
-        let id = element.question.id;
-        let query = {
-            'title': title,
-            'id': id
+        let id = element.id;
+        let title = element.title;
+        let answer = {
+            'id': id,
+            'title': title
         };
-        arr.push(query);
-        User.findOne(query, function (docs) {
-            if (!docs) {
-                User.insert(query);
-            }
-        });
+        answersArray.push(answer);
     });
-
-    User.pushToArray({ token: self }, { answers: arr });
-    return is_end;
+    let updatePromise = new Promise(function (resolve, reject) {
+        UserService.findOne(database, { 'token': user })
+            .then(function (userDoc) {
+                userDoc.answers = answersArray;
+                UserService.update(database, { 'token': user }, userDoc)
+                    .then(function () {
+                        resolve(is_end);
+                    })
+                    .catch(function (err) {
+                        reject(err);
+                    })
+            })
+            .catch(function (err) {
+                reject(err);
+            })
+    });
+    return updatePromise;
 }
+
 
 module.exports = {
     'analyzeFollowees': analyzeFollowees,

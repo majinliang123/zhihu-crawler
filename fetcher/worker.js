@@ -1,7 +1,3 @@
-/**
- * main file for crawler
- * create by Madison on 2017/6/7
- */
 'use strict';
 
 const fetchInfo = require('./info.js');
@@ -10,17 +6,27 @@ const UrlCreater = require('../util/urlCreater.js');
 
 // const queue = ['following_questions', 'following_columns', 'following_topics', 'asks', 'answers', 'following', 'followers'];
 
-async function workForFollowees(starter) {
-    let offset = 0;
-    while (true) {
-        let data = await fetchInfo(starter, offset, UrlCreater.createUrlFollowees);
-        if (Analyzer.analyzeFollowees(data, starter)) {
-            break;
-        };
-        offset += 20;
+function workForFollowees(database, user, offset) {
+    if (!offset) {
+        offset = 0;
     }
-}
+    return fetchInfo(user, offset, UrlCreater.createUrlFollowees)
+        .then(function (data) {
+            return Analyzer.analyzeFollowees(database, data, user);
+        })
+        .then(function (is_end) {
+            if (!is_end) {
+                offset = offset + 20;
+                return workForFollowees(database, user, offset);
+            } else {
+                return Promise.resolve();
+            }
+        })
+        .catch(function (err) {
+            return Promise.reject(err);
+        })
 
+}
 async function workForFollowers(starter) {
     let offset = 0;
     while (true) {
@@ -76,15 +82,16 @@ async function workForAnswers(starter) {
     }
 }
 
-function worker(starter) {
+function worker(database, user) {
     return new Promise(function (resolve, reject) {
-        let workerList = [workForFollowees(starter), workForFollowers(starter), workForFollowingQuestions(starter), workForFollowingColumns(starter), workForFollowingTopics(starter), workForAnswers(starter)];
+        // let workerList = [workForFollowees(database, user), workForFollowers(database, user), workForFollowingQuestions(database, user), workForFollowingColumns(database, user), workForFollowingTopics(database, user), workForAnswers(database, user)];
+        let workerList = [workForFollowees(database, user)];
         Promise.all(workerList)
             .then(function () {
-                resolve(starter);
+                resolve(user);
             })
-            .catch(function () {
-                reject('crawler for ' + starter + ' is failed.');
+            .catch(function (err) {
+                reject('crawler for ' + user + ' is failed. Failed reason is: ' + err);
             });
     });
 }

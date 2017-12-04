@@ -1,6 +1,6 @@
 'use strict';
 
-const request = require("request");
+const request = require('request');
 
 function fetchInfo(url_token, offset, createUrl) {
     let url = createUrl(url_token, offset);
@@ -9,7 +9,11 @@ function fetchInfo(url_token, offset, createUrl) {
             if (err) {
                 reject(err);
             } else {
-                resolve(response.body);
+                if (response.statusCode >= 400) {
+                    reject('Request wrong with status code: ' + response.statusCode);
+                } else {
+                    resolve(response.body);
+                }
             }
         });
     });

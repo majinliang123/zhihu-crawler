@@ -6,15 +6,17 @@ function createHeader(url) {
     let option = {
         url: nconf.get('headerUrl') + url,
         headers: {
-            'Accept': nconf.get('header:Accept'),
-            'Accept-charset': nconf.get('header:Accept-charset'),
+            'accept': nconf.get('header:accept'),
+            "Accept-charset": nconf.get('header:Accept-charset'),
             'Accept-Language': nconf.get('header:Accept-Language'),
+            'authorization': nconf.get('header:authorization'),
             'Connection': nconf.get('header:Connection'),
             'Cookie': nconf.get('header:Cookie'),
+            'Host': nconf.get('header:Host'),
             'Referer': nconf.get('header:Referer'),
             'User-Agent': nconf.get('header:User-Agent'),
-            'X-Requested-With': nconf.get('header:X-Requested-With'),
-            'X-Xsrftoken': nconf.get('X-Xsrftoken'),
+            'X-API-VERSION': nconf.get('header:X-API-VERSION'),
+            'X-UDID': nconf.get('header:X-UDID')
         }
     };
     return option;

@@ -1,7 +1,7 @@
 {
     "cluster": {
-        "number": 1,
-        "interval": 100
+        "number": 2,
+        "interval": 10
     },
     "db": {
         "MongoDBUrl": "localhost",

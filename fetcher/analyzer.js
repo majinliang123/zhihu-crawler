@@ -1,6 +1,7 @@
 'use strict';
 
 const UserService = require('../db/userService');
+const pushToArray = require('../util/pushToArray.js');
 
 function analyzeFollowees(database, info, user) {
     info = JSON.parse(info);
@@ -42,7 +43,7 @@ function analyzeFollowees(database, info, user) {
     let updatePromise = new Promise(function (resolve, reject) {
         UserService.findOne(database, { 'token': user })
             .then(function (userDoc) {
-                userDoc.following = followingArray;
+                userDoc.following = pushToArray(userDoc.following, followingArray);
                 UserService.update(database, { 'token': user }, userDoc)
                     .then(function () {
                         resolve(is_end);
@@ -99,7 +100,7 @@ function analyzeFollowers(database, info, user) {
     let updatePromise = new Promise(function (resolve, reject) {
         UserService.findOne(database, { 'token': user })
             .then(function (userDoc) {
-                userDoc.followers = followersArray;
+                userDoc.followers = pushToArray(userDoc.followers, followersArray);
                 UserService.update(database, { 'token': user }, userDoc)
                     .then(function () {
                         resolve(is_end);
@@ -136,7 +137,7 @@ function analyzeFollowingQuestions(database, info, user) {
     let updatePromise = new Promise(function (resolve, reject) {
         UserService.findOne(database, { 'token': user })
             .then(function (userDoc) {
-                userDoc.following_questions = followingQuestionsArray;
+                userDoc.following_questions = pushToArray(userDoc.following_questions, followingQuestionsArray);
                 UserService.update(database, { 'token': user }, userDoc)
                     .then(function () {
                         resolve(is_end);
@@ -171,7 +172,7 @@ function analyzeFollowingColumns(database, info, user) {
     let updatePromise = new Promise(function (resolve, reject) {
         UserService.findOne(database, { 'token': user })
             .then(function (userDoc) {
-                userDoc.following_columns = followingColumnsArray;
+                userDoc.following_columns = pushToArray(userDoc.following_columns, followingColumnsArray);
                 UserService.update(database, { 'token': user }, userDoc)
                     .then(function () {
                         resolve(is_end);
@@ -201,12 +202,12 @@ function analyzeFollowingTopics(database, info, user) {
             'id': id,
             'title': title
         };
-        followingTopicsArray.push(column);
+        followingTopicsArray.push(topic);
     });
     let updatePromise = new Promise(function (resolve, reject) {
         UserService.findOne(database, { 'token': user })
             .then(function (userDoc) {
-                userDoc.following_topics = followingTopicsArray;
+                userDoc.following_topics = pushToArray(userDoc.following_topics, followingTopicsArray);
                 UserService.update(database, { 'token': user }, userDoc)
                     .then(function () {
                         resolve(is_end);
@@ -241,7 +242,7 @@ function analyzeAnswers(database, info, user) {
     let updatePromise = new Promise(function (resolve, reject) {
         UserService.findOne(database, { 'token': user })
             .then(function (userDoc) {
-                userDoc.answers = answersArray;
+                userDoc.answers = pushToArray(userDoc.answers, answersArray);
                 UserService.update(database, { 'token': user }, userDoc)
                     .then(function () {
                         resolve(is_end);

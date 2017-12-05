@@ -1,90 +1,151 @@
-/**
- * main file for crawler
- * create by Madison on 2017/6/7
- */
 'use strict';
 
 const fetchInfo = require('./info.js');
 const Analyzer = require('./analyzer.js');
-const Creator = require('./util.js');
+const UrlCreater = require('../util/urlCreater.js');
 
 // const queue = ['following_questions', 'following_columns', 'following_topics', 'asks', 'answers', 'following', 'followers'];
 
-async function workeForFollowees(starter) {
-    let offset = 0;
-    while (true) {
-        let data = await fetchInfo(starter, offset, Creator.createUrlFollowees);
-        if (Analyzer.analyzeFollowees(data, starter)) {
-            break;
-        };
-        offset += 20;
+function workForFollowees(database, user, offset) {
+    if (!offset) {
+        offset = 0;
     }
+    return fetchInfo(user, offset, UrlCreater.createUrlFollowees)
+        .then(function (data) {
+            return Analyzer.analyzeFollowees(database, data, user);
+        })
+        .then(function (is_end) {
+            if (!is_end) {
+                offset = offset + 20;
+                return workForFollowees(database, user, offset);
+            } else {
+                return Promise.resolve();
+            }
+        })
+        .catch(function (err) {
+            return Promise.reject(err);
+        })
+
 }
 
-async function workeForFollowers(starter) {
-    let offset = 0;
-    while (true) {
-        let data = await fetchInfo(starter, offset, Creator.createUrlFollowers);
-        if (Analyzer.analyzeFollowers(data, starter)) {
-            break;
-        };
-        offset += 20;
+function workForFollowers(database, user, offset) {
+    if (!offset) {
+        offset = 0;
     }
+    return fetchInfo(user, offset, UrlCreater.createUrlFollowers)
+        .then(function (data) {
+            return Analyzer.analyzeFollowers(database, data, user);
+        })
+        .then(function (is_end) {
+            if (!is_end) {
+                offset = offset + 20;
+                return workForFollowers(database, user, offset);
+            } else {
+                return Promise.resolve();
+            }
+        })
+        .catch(function (err) {
+            return Promise.reject(err);
+        })
 }
 
-async function workeForFollowingQuestions(starter) {
-    let offset = 0;
-    while (true) {
-        let data = await fetchInfo(starter, offset, Creator.createUrlFollowingQuestions);
-        if (Analyzer.analyzeFollowingQuestions(data, starter)) {
-            break;
-        };
-        offset += 20;
+function workForFollowingQuestions(database, user, offset) {
+    if (!offset) {
+        offset = 0;
     }
+    return fetchInfo(user, offset, UrlCreater.createUrlFollowingQuestions)
+        .then(function (data) {
+            return Analyzer.analyzeFollowingQuestions(database, data, user);
+        })
+        .then(function (is_end) {
+            if (!is_end) {
+                offset = offset + 20;
+                return workForFollowingQuestions(database, user, offset);
+            } else {
+                return Promise.resolve();
+            }
+        })
+        .catch(function (err) {
+            return Promise.reject(err);
+        })
 }
 
-async function workeForFollowingColumns(starter) {
-    let offset = 0;
-    while (true) {
-        let data = await fetchInfo(starter, offset, Creator.createUrlFollowingColumns);
-        if (Analyzer.analyzeFollowingColumns(data, starter)) {
-            break;
-        };
-        offset += 20;
+function workForFollowingColumns(database, user, offset) {
+    if (!offset) {
+        offset = 0;
     }
+    return fetchInfo(user, offset, UrlCreater.createUrlFollowingColumns)
+        .then(function (data) {
+            return Analyzer.analyzeFollowingColumns(database, data, user);
+        })
+        .then(function (is_end) {
+            if (!is_end) {
+                offset = offset + 20;
+                return workForFollowingColumns(database, user, offset);
+            } else {
+                return Promise.resolve();
+            }
+        })
+        .catch(function (err) {
+            return Promise.reject(err);
+        })
 }
 
-async function workeForFollowingTopics(starter) {
-    let offset = 0;
-    while (true) {
-        let data = await fetchInfo(starter, offset, Creator.createUrlFollowingTopics);
-        if (Analyzer.analyzeFollowingTopics(data, starter)) {
-            break;
-        };
-        offset += 20;
+function workForFollowingTopics(database, user, offset) {
+    if (!offset) {
+        offset = 0;
     }
+    return fetchInfo(user, offset, UrlCreater.createUrlFollowingTopics)
+        .then(function (data) {
+            return Analyzer.analyzeFollowingTopics(database, data, user);
+        })
+        .then(function (is_end) {
+            if (!is_end) {
+                offset = offset + 20;
+                return workForFollowingTopics(database, user, offset);
+            } else {
+                return Promise.resolve();
+            }
+        })
+        .catch(function (err) {
+            return Promise.reject(err);
+        })
 }
 
-async function workeForAnswers(starter) {
-    let offset = 0;
-    while (true) {
-        let data = await fetchInfo(starter, offset, Creator.createUrlAnswers);
-        if (Analyzer.analyzeAnswers(data, starter)) {
-            break;
-        };
-        offset += 20;
+function workForAnswers(database, user, offset) {
+    if (!offset) {
+        offset = 0;
     }
+    return fetchInfo(user, offset, UrlCreater.createUrlAnswers)
+        .then(function (data) {
+            return Analyzer.analyzeAnswers(database, data, user);
+        })
+        .then(function (is_end) {
+            if (!is_end) {
+                offset = offset + 20;
+                return workForAnswers(database, user, offset);
+            } else {
+                return Promise.resolve();
+            }
+        })
+        .catch(function (err) {
+            return Promise.reject(err);
+        })
 }
 
-function worker(starter, callback) {
-    let workerList = [workeForFollowees(starter), workeForFollowers(starter),  workeForFollowingQuestions(starter), workeForFollowingColumns(starter),workeForFollowingTopics(starter),workeForAnswers(starter)];
-    Promise.all(workerList).then(function(){
-        callback();
-        console.log('crawler for ' + starter + ' is completed.');
-    }).catch(function(err){
-        console.log(err);
+function worker(database, user) {
+    return new Promise(function (resolve, reject) {
+        let workerList = [workForFollowees(database, user), workForFollowers(database, user), workForFollowingQuestions(database, user), workForFollowingTopics(database, user), workForAnswers(database, user)];
+        // let workerList = [workForFollowees(database, user)];
+        Promise.all(workerList)
+            .then(function () {
+                resolve(user);
+            })
+            .catch(function (err) {
+                reject('crawler for ' + user + ' is failed. Failed reason is: ' + err);
+            });
     });
-    
 }
+
 
 module.exports = worker;

@@ -6,6 +6,8 @@
 
 * install nodejs and its version is 7.9.0
 * install dependencies by running 'npm install'， if it can't run successfully, you could run yarn install
+* insert init data into database. run the below command:
+* * use zhihu; db.user.insert({token: 'xiao-ma-86-12-82'}); db.user.insert({token:'bu-yi-mi-ya'}); db.user.insert({token:'tian-feng-feng-92'}); db.user.insert({token: 'a-li-kof'});
 
 # Run
 

@@ -1,5 +1,7 @@
 # zhihu-crawler ![Build Status](https://travis-ci.org/majinliang123/zhihu-crawler.svg?branch=develop) ![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103) ![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.png?v=103)
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/majinliang123/zhihu-crawler.svg)](https://greenkeeper.io/)
+
 ### a crawler for zhihu(https://www.zhihu.com)
 
 # Init

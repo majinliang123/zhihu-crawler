@@ -22,7 +22,7 @@
   "homepage": "https://github.com/majinliang123/zhihu-crawler#readme",
   "dependencies": {
     "log4js": "^2.5.2",
-    "mongodb": "^3.0.2",
+    "mongodb": "^3.1.0",
     "nconf": "^0.10.0",
     "request": "^2.83.0"
   },

@@ -32,6 +32,6 @@
     "gulp-jshint": "^2.0.4",
     "jshint": "^2.9.4",
     "jshint-stylish": "^2.2.1",
-    "mkdirp": "^0.5.1"
+    "mkdirp": "^1.0.0"
   }
 }

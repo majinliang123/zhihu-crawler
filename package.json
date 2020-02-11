@@ -24,7 +24,7 @@
     "log4js": "^3.0.0",
     "mongodb": "^3.0.2",
     "nconf": "^0.10.0",
-    "request": "^2.83.0"
+    "request": "^2.88.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
